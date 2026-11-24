@@ -1,5 +1,9 @@
-This repository packages Cerebro for Docker.
+This repository builds and packages Cerebro for Docker.
 
-Cerebro 0.9.4 is copyright Leonardo Menezes and licensed under the MIT License.
+Cerebro application code is based on Leonardo Menezes' cerebro 0.9.4
+and is licensed under the MIT License.
 Upstream: https://github.com/lmenezes/cerebro
 Release: https://github.com/lmenezes/cerebro/releases/tag/v0.9.4
+
+This fork rebuilds that application against Play Framework 3.0 / Pekko
+on Java 21 and ships it as version 0.10.0.

@@ -64,7 +64,6 @@ jobs:
           format: table
 
       - name: Trivy libraries
-        if: always()
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: cerebro:ci
@@ -74,7 +73,7 @@ jobs:
           vuln-type: library
           severity: HIGH,CRITICAL
           ignore-unfixed: true
-          exit-code: "0"
+          exit-code: "1"
           format: sarif
           output: trivy-libraries.sarif
 
@@ -102,7 +101,7 @@ jobs:
           push: true
           tags: |
             ${{ steps.image.outputs.name }}:latest
-            ${{ steps.image.outputs.name }}:0.9.4
+            ${{ steps.image.outputs.name }}:0.10.0
             ${{ steps.image.outputs.name }}:sha-${{ github.sha }}
           cache-from: type=gha
           build-args: |

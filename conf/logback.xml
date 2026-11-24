@@ -10,6 +10,7 @@
 
     <logger name="play" level="INFO"/>
     <logger name="application" level="INFO"/>
+    <logger name="org.apache.pekko" level="WARN"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

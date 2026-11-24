@@ -1,29 +1,29 @@
 # Cerebro
 
-Schlankes Image für [Cerebro](https://github.com/lmenezes/cerebro) 0.9.4, den Elasticsearch-Web-Admin.
+Slim image for [Cerebro](https://github.com/lmenezes/cerebro), the Elasticsearch web admin.
 
-`lmenezes/cerebro:0.9.4` auf Docker Hub ist seit 2021 unverändert (`openjdk:11.0.10` auf Debian Buster). Dieses Repo behält das letzte Upstream-Release und tauscht nur die Laufzeit: aktuelles Eclipse Temurin 11, per `jlink` auf die nötigen Module geschnitten, auf `gcr.io/distroless/base-nossl-debian12` ohne Shell, ohne Paketmanager und ohne OpenSSL. TLS macht die JVM selbst.
+`lmenezes/cerebro:0.9.4` on Docker Hub has been unchanged since 2021. This repo rebuilds the app from source: Play 3.0.12 / Pekko, Scala 2.13.18, Java 21, current sqlite-jdbc. The runtime is a `jlink`-trimmed Temurin 21 JRE on `gcr.io/distroless/base-nossl-debian12` with no shell, no package manager, and no OpenSSL. The JVM handles TLS itself.
 
-Play 2.8.7 spricht nur Java 11. Ein neueres JDK braucht einen Fork der Anwendung, nicht nur ein neues Basisimage. Die JARs selbst bleiben die von April 2021. OS-Lücken gehen mit jedem Rebuild weg, Lücken in Play, Netty, Jackson und SQLite bleiben, bis Cerebro neu gebaut wird. Der tägliche Scan zeigt sie im Security-Tab.
+App version: **0.10.0**. The AngularJS UI still comes from upstream 0.9.4.
 
-## Start
+## Run
 
 ```bash
 docker build -t cerebro .
 docker run --rm -p 9000:9000 -e CEREBRO_SECRET="$(openssl rand -base64 32)" -v cerebro:/var/lib/cerebro cerebro
 ```
 
-Oder `docker compose up --build`. Die UI liegt auf [http://localhost:9000](http://localhost:9000).
+Or `docker compose up --build`. The UI is at [http://localhost:9000](http://localhost:9000).
 
-| Variable | Default | Bedeutung |
+| Variable | Default | Meaning |
 | --- | --- | --- |
-| `CEREBRO_PORT` | `9000` | HTTP-Port im Container |
-| `CEREBRO_SECRET` | öffentliches Upstream-Secret | Session- und CSRF-Secret, mindestens 32 Zeichen. In jedem geteilten Netz setzen. |
-| `CEREBRO_DATA_PATH` | `/var/lib/cerebro/cerebro.db` | SQLite-Datei mit gespeicherten Hosts |
-| `JAVA_TOOL_OPTIONS` | Container-Memory-Defaults | Zusätzliche JVM-Flags, die Java selbst liest |
-| `AUTH_TYPE`, `BASIC_AUTH_USER`, `BASIC_AUTH_PWD`, `LDAP_*` | leer | Wie im Upstream-`application.conf` |
+| `CEREBRO_PORT` | `9000` | HTTP port inside the container |
+| `CEREBRO_SECRET` | public default secret | Session and CSRF secret, at least 32 characters |
+| `CEREBRO_DATA_PATH` | `/var/lib/cerebro/cerebro.db` | SQLite file for saved hosts |
+| `JAVA_TOOL_OPTIONS` | container memory defaults | Extra JVM flags |
+| `AUTH_TYPE`, `BASIC_AUTH_USER`, `BASIC_AUTH_PWD`, `LDAP_*` | empty | Same as in `conf/application.conf` |
 
-Eigene Hosts oder LDAP stehen weiter in `conf/application.conf`. Die Datei als ganzes ersetzen:
+Custom hosts or LDAP live in `conf/application.conf`. Replace the whole file:
 
 ```bash
 docker run --rm -p 9000:9000 \
@@ -32,9 +32,9 @@ docker run --rm -p 9000:9000 \
   cerebro
 ```
 
-Gespeicherte Cluster liegen in `/var/lib/cerebro`, nicht mehr neben den JARs.
+Saved clusters are stored under `/var/lib/cerebro`.
 
-## Lokal
+## Local
 
 ```bash
 make build
@@ -43,29 +43,25 @@ make run
 make scan
 ```
 
-`make scan` braucht ein lokal installiertes Docker und zieht `aquasec/trivy`.
-
-Das veröffentlichte Image aus GitHub Actions ist `linux/amd64`. Ein Build auf Apple Silicon erzeugt `linux/arm64` für denselben Dockerfile.
+`make scan` needs Docker and pulls `aquasec/trivy`. The image build compiles with sbt and runs the specs.
 
 ## GitHub
 
-Nach dem Anlegen des leeren Remotes:
+After creating the empty remote:
 
 ```bash
 git remote add origin git@github.com:OWNER/REPO.git
 git push -u origin main
 ```
 
-Der Workflow `.github/workflows/image.yml` läuft bei Pull Requests, bei Push auf `main`, täglich um 04:17 UTC und manuell. Er baut, prüft ob die UI antwortet und die SQLite-Datei entsteht, scannt mit Trivy und pusht bei grünem OS-Scan nach GHCR:
+The `.github/workflows/image.yml` workflow runs on pull requests, pushes to `main`, daily at 04:17 UTC, and on demand. It builds (including tests), checks startup and SQLite, scans OS and libraries with Trivy, and pushes to GHCR only when the scan is clean:
 
 - `ghcr.io/OWNER/REPO:latest`
-- `ghcr.io/OWNER/REPO:0.9.4` (App-Version, wird täglich neu gebaut)
+- `ghcr.io/OWNER/REPO:0.10.0`
 - `ghcr.io/OWNER/REPO:sha-<commit>`
 
-Dafür muss der Actions-Token Packages schreiben dürfen (Repo-Settings, Actions, Workflow permissions: Read and write). Das Paket ist nach dem ersten Push oft privat. Library-Funde im Security-Tab brauchen GitHub Code Scanning. Ohne das bleibt der Upload ein Hinweis im Log, der OS-Scan gilt trotzdem.
+The Actions token needs write access to packages. Dependabot opens weekly PRs for Actions and base image tags in the Dockerfile.
 
-Dependabot öffnet wöchentlich PRs für Actions und die Basisimage-Tags im Dockerfile (`eclipse-temurin`, `alpine`, `distroless`).
+## Attribution
 
-## Herkunft
-
-Anwendung: Leonardo Menezes, MIT, [v0.9.4](https://github.com/lmenezes/cerebro/releases/tag/v0.9.4). Dieses Packaging steht ebenfalls unter MIT, siehe `LICENSE` und `NOTICE`.
+Application: Leonardo Menezes, MIT, based on [v0.9.4](https://github.com/lmenezes/cerebro/releases/tag/v0.9.4). This packaging and rebuild are also MIT; see `LICENSE` and `NOTICE`.
