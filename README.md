@@ -4,7 +4,7 @@ Slim image for [Cerebro](https://github.com/lmenezes/cerebro), the Elasticsearch
 
 `lmenezes/cerebro:0.9.4` on Docker Hub has been unchanged since 2021. This repo rebuilds the app from source: Play 3.0.12 / Pekko, Scala 2.13.18, Java 21, current sqlite-jdbc. The runtime is a `jlink`-trimmed Temurin 21 JRE on `gcr.io/distroless/base-nossl-debian13` with no shell, no package manager, and no OpenSSL. The JVM handles TLS itself.
 
-App version: **0.10.0**. The AngularJS UI still comes from upstream 0.9.4.
+App version: **0.11.0**. The AngularJS UI still comes from upstream 0.9.4.
 
 ## Run
 

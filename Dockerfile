@@ -58,10 +58,10 @@ ARG IMAGE_SOURCE=""
 ARG GIT_SHA=""
 
 LABEL org.opencontainers.image.title="cerebro" \
-      org.opencontainers.image.description="Cerebro 0.10.0 built from source on Play 3.0 / Java 21" \
+      org.opencontainers.image.description="Cerebro 0.11.0 built from source on Play 3.0 / Java 21" \
       org.opencontainers.image.url="https://github.com/lmenezes/cerebro" \
       org.opencontainers.image.source="${IMAGE_SOURCE}" \
-      org.opencontainers.image.version="0.10.0" \
+      org.opencontainers.image.version="0.11.0" \
       org.opencontainers.image.revision="${GIT_SHA}" \
       org.opencontainers.image.licenses="MIT"
 

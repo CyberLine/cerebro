@@ -6,4 +6,4 @@ Upstream: https://github.com/lmenezes/cerebro
 Release: https://github.com/lmenezes/cerebro/releases/tag/v0.9.4
 
 This fork rebuilds that application against Play Framework 3.0 / Pekko
-on Java 21 and ships it as version 0.10.0.
+on Java 21 and ships it as version 0.11.0.

@@ -1,6 +1,6 @@
 name := "cerebro"
 organization := "cerebro"
-version := "0.10.0"
+version := "0.11.0"
 scalaVersion := "2.13.18"
 
 maintainer := "Cerebro image maintainers"
