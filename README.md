@@ -45,23 +45,6 @@ make scan
 
 `make scan` needs Docker and pulls `aquasec/trivy`. The image build compiles with sbt and runs the specs.
 
-## GitHub
-
-After creating the empty remote:
-
-```bash
-git remote add origin git@github.com:OWNER/REPO.git
-git push -u origin main
-```
-
-The `.github/workflows/image.yml` workflow runs on pull requests, pushes to `main`, daily at 04:17 UTC, and on demand. It builds (including tests), checks startup and SQLite, scans OS and libraries with Trivy, and pushes to GHCR only when the scan is clean:
-
-- `ghcr.io/OWNER/REPO:latest`
-- `ghcr.io/OWNER/REPO:0.10.0`
-- `ghcr.io/OWNER/REPO:sha-<commit>`
-
-The Actions token needs write access to packages. Dependabot opens weekly PRs for Actions and base image tags in the Dockerfile.
-
 ## Attribution
 
 Application: Leonardo Menezes, MIT, based on [v0.9.4](https://github.com/lmenezes/cerebro/releases/tag/v0.9.4). This packaging and rebuild are also MIT; see `LICENSE` and `NOTICE`.
