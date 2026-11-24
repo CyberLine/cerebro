@@ -3,11 +3,12 @@
 # Cerebro 0.9.4 is Play 2.8.7, which only runs on Java 11.
 # The published app jars stay pinned; the runtime below is rebuilt from current bases.
 # Alpine JRE images for Java 11 are amd64-only and sqlite-jdbc 3.34 has no musl arm64 lib,
-# so the runtime is a stripped glibc jlink JRE on distroless (no shell, no package manager).
+# so the runtime is a stripped glibc jlink JRE on distroless without OpenSSL.
+# Java does its own TLS. The base image only carries glibc, certificates and zone data.
 
 ARG ALPINE_IMAGE=alpine:3.24
 ARG TEMURIN_IMAGE=eclipse-temurin:11.0.33_10-jdk-jammy
-ARG DISTROLESS_IMAGE=gcr.io/distroless/base-debian12:nonroot
+ARG DISTROLESS_IMAGE=gcr.io/distroless/base-nossl-debian12:nonroot
 
 FROM ${ALPINE_IMAGE} AS dist
 

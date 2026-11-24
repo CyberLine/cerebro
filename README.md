@@ -2,7 +2,7 @@
 
 Schlankes Image für [Cerebro](https://github.com/lmenezes/cerebro) 0.9.4, den Elasticsearch-Web-Admin.
 
-`lmenezes/cerebro:0.9.4` auf Docker Hub ist seit 2021 unverändert (`openjdk:11.0.10` auf Debian Buster). Dieses Repo behält das letzte Upstream-Release und tauscht nur die Laufzeit: aktuelles Eclipse Temurin 11, per `jlink` auf die nötigen Module geschnitten, auf `gcr.io/distroless/base-debian12` ohne Shell und ohne Paketmanager.
+`lmenezes/cerebro:0.9.4` auf Docker Hub ist seit 2021 unverändert (`openjdk:11.0.10` auf Debian Buster). Dieses Repo behält das letzte Upstream-Release und tauscht nur die Laufzeit: aktuelles Eclipse Temurin 11, per `jlink` auf die nötigen Module geschnitten, auf `gcr.io/distroless/base-nossl-debian12` ohne Shell, ohne Paketmanager und ohne OpenSSL. TLS macht die JVM selbst.
 
 Play 2.8.7 spricht nur Java 11. Ein neueres JDK braucht einen Fork der Anwendung, nicht nur ein neues Basisimage. Die JARs selbst bleiben die von April 2021. OS-Lücken gehen mit jedem Rebuild weg, Lücken in Play, Netty, Jackson und SQLite bleiben, bis Cerebro neu gebaut wird. Der tägliche Scan zeigt sie im Security-Tab.
 
