@@ -6,7 +6,7 @@
 
 ARG ALPINE_IMAGE=alpine:3.24
 ARG TEMURIN_IMAGE=eclipse-temurin:21.0.9_10-jdk-jammy
-ARG DISTROLESS_IMAGE=gcr.io/distroless/base-nossl-debian12:nonroot
+ARG DISTROLESS_IMAGE=gcr.io/distroless/base-nossl-debian13:nonroot
 ARG SBT_VERSION=1.13.1
 
 FROM ${TEMURIN_IMAGE} AS builder
