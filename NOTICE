@@ -1,0 +1,5 @@
+This repository packages Cerebro for Docker.
+
+Cerebro 0.9.4 is copyright Leonardo Menezes and licensed under the MIT License.
+Upstream: https://github.com/lmenezes/cerebro
+Release: https://github.com/lmenezes/cerebro/releases/tag/v0.9.4
