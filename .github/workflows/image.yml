@@ -80,7 +80,7 @@ jobs:
       - name: Upload library SARIF
         if: always() && hashFiles('trivy-libraries.sarif') != ''
         continue-on-error: true
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: trivy-libraries.sarif
           category: trivy-libraries
